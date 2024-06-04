@@ -38,7 +38,8 @@ cd $path_preprocess
 python touch_subject_yml.py \
     --dataset_folder $video_folder \
     --yml_name $subject_name \
-    --keyframe_ids "0,1" 
+    --keyframe_ids "0,1" \
+    --batch_size 32
 
 cat $video_folder/$subject_name.yml
 

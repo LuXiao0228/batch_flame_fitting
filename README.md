@@ -29,7 +29,9 @@ bash fitting_flame.sh
 
 ![alt text](image.png)
 
-- 生成 tracker 需要的 .yml 配置文件，需要选择中性表情的关键帧，修改下面的 `--keyframe_ids`，多张关键帧编号使用逗号`,`隔开。
+- 生成 tracker 需要的 .yml 配置文件。
+    - 选择中性表情的关键帧，修改`keyframe_ids`，多张关键帧编号使用逗号`,`隔开。
+    - 设置 `batch_size`，合理利用显存。
 
 ![alt text](image-2.png)
 

@@ -10,10 +10,13 @@ if __name__ == '__main__':
     parser.add_argument("--yml_name", type=str, default="config")
     parser.add_argument("--keyframe_ids", type=str, default="1,2")
     parser.add_argument("--begin_frames", type=int, default=0)
+    parser.add_argument("--batch_size", type=int, default=64)
     args = parser.parse_args()
     dataset_folder = args.dataset_folder
     yml_file_path = os.path.join(dataset_folder, f'{args.yml_name}.yml')
     bbox_file = os.path.join(dataset_folder, "box_bound.json")
+    
+    # crop_img = False
     if os.path.exists(bbox_file):
         # get image size
         with open(bbox_file) as f:
@@ -23,6 +26,7 @@ if __name__ == '__main__':
         images_path = sorted(glob.glob(os.path.join(dataset_folder, 'source', '*.png')))
         imag = Image.open(images_path[0])
         image_size = [imag.size[1], imag.size[0]]
+        # crop_img = True
     
     kf = [int(s) for s in args.keyframe_ids.split(',')]
     
@@ -36,6 +40,7 @@ if __name__ == '__main__':
         "keyframes": kf,
         "crop_image": False,
         "image_size": image_size,
+        "batch_size": args.batch_size,
     }
     
     with open(yml_file_path, 'w') as fp:
