@@ -1,0 +1,5 @@
+flame_model/assets/flame/*.pkl
+preprocess/MICA/data/FLAME2020/*.pkl
+preprocess/MICA/data/pretrained/mica.tar
+preprocess/metrical-tracker/data/FLAME2020/*.pkl
+preprocess/metrical-tracker/data/FLAME2020/FLAME_texture.npz
