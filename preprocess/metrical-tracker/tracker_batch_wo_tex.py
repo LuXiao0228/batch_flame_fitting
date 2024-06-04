@@ -192,8 +192,6 @@ class Tracker(object):
         self.exp = nn.Parameter(torch.from_numpy(flame_params['exp']).to(self.device))
         self.shape = nn.Parameter(torch.from_numpy(flame_params['shape']).to(self.device))
         self.mica_shape = nn.Parameter(torch.from_numpy(flame_params['shape']).to(self.device))
-        self.shape = nn.Parameter(shape.to(self.device))
-        self.mica_shape = nn.Parameter(shape.to(self.device))
         self.eyes = nn.Parameter(torch.from_numpy(flame_params['eyes']).to(self.device))
         self.eyelids = nn.Parameter(torch.from_numpy(flame_params['eyelids']).to(self.device))
         self.jaw = nn.Parameter(torch.from_numpy(flame_params['jaw']).to(self.device))
