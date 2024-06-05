@@ -180,7 +180,7 @@ class Tracker(object):
 
         last_snap = snaps[idx]
         payload = torch.load(last_snap)
-        shape = torch.load(os.path.join(self.output_folder, "shape_param.shape"))
+        # shape = torch.load(os.path.join(self.output_folder, "shape_param.shape"))
 
         camera_params = payload['camera']
         self.R = nn.Parameter(torch.from_numpy(camera_params['R']).to(self.device))
@@ -738,7 +738,12 @@ class Tracker(object):
     
     def optimize_video(self):
         self.is_initializing = False
+        
+        # img_len = len(self.dataset)
+        # if img_len < self.batch_size:
+        #     self.batch_size = img_len
         self.create_batch_parameters_from_init()
+        
         pre_batch = None
         for batch in self.dataloader:
             batch = self.to_cuda(batch)
@@ -747,14 +752,15 @@ class Tracker(object):
             
             if B < self.batch_size:
                 diff = self.batch_size - B
-                Q = diff // B
+                Q = diff // B + 1
                 r = diff % B
                 if pre_batch is None:
-                    for k, v in batch.item():
-                        if Q != 0:
-                            pre_batch[k] = v.repeat(Q, 1, 1)
+                    pre_batch = {}
+                    for k, v in batch.items():
+                        if Q > 1:
+                            pre_batch[k] = v.repeat_interleave(Q, dim=0)
                         if r != 0:
-                            pre_batch[k] = torch.cat(pre_batch[k], v[:r], dim=0)
+                            pre_batch[k] = torch.cat([pre_batch[k], v[:r]], dim=0)
                 else:
                     for k, v in batch.items():
                         pre_batch[k][:B] = v
